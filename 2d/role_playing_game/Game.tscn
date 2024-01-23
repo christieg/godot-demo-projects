@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://dlec1sr72eb72"]
 
 [ext_resource type="Script" path="res://Game.gd" id="1"]
-[ext_resource type="PackedScene" path="res://combat/Combat.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://grid_movement/Exploration.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://xm2gmo5ff3b8" path="res://combat/Combat.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://ckxeeoa0080bm" path="res://grid_movement/Exploration.tscn" id="3"]
 
 [sub_resource type="Animation" id="1"]
 length = 0.5
@@ -26,8 +26,6 @@ _data = {
 
 [node name="Game" type="Node"]
 script = ExtResource("1")
-combat_screen = NodePath("Combat")
-exploration_screen = NodePath("Exploration")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

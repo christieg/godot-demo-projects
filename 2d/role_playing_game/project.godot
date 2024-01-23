@@ -14,10 +14,10 @@ config/name="JRPG Demo"
 config/description="This shows a method of creating grid-based movement with Godot
 and GDScript. It also includes a simple JRPG-style dialogue and
 battle system on top of it."
-run/main_scene="res://Game.tscn"
-config/features=PackedStringArray("4.0")
-config/icon="res://icon.webp"
 config/tags=PackedStringArray("2d", "demo", "gui", "official", "tilemap")
+run/main_scene="res://Game.tscn"
+config/features=PackedStringArray("4.2")
+config/icon="res://icon.webp"
 
 [display]
 
@@ -63,6 +63,7 @@ ui_down={
 
 [rendering]
 
+renderer/rendering_method="mobile"
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false

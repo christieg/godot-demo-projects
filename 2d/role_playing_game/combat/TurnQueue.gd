@@ -1,6 +1,6 @@
 extends Node
 
-@export var combatants_list: NodePath
+@export var combatants_list: Node
 var queue = []:
 	set(value):
 		# TODO: Manually copy the code from this method.
@@ -13,7 +13,7 @@ var active_combatant = null:
 signal active_combatant_changed(active_combatant)
 
 func _ready():
-	combatants_list = get_node(combatants_list)
+	combatants_list = get_node("/root/Game/Combat/UI/Combatants")
 
 
 func initialize():

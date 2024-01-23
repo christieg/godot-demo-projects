@@ -1,21 +1,22 @@
 extends Node
 
-@export var combat_screen: NodePath
-@export var exploration_screen: NodePath
+@export var combat_screen: Node
+@export var exploration_screen: Node
 
 const PLAYER_WIN = "res://dialogue/dialogue_data/player_won.json"
 const PLAYER_LOSE = "res://dialogue/dialogue_data/player_lose.json"
 
 func _ready():
-	exploration_screen = get_node(exploration_screen)
-	combat_screen = get_node(combat_screen)
+	exploration_screen = get_node("Exploration")
+	combat_screen = get_node("Combat")
 	combat_screen.combat_finished.connect(self._on_combat_finished)
 	for n in $Exploration/Grid.get_children():
 		if not n.type == n.CellType.ACTOR:
 			continue
-		if not n.has_node("DialoguePlayer"):
+		if not n.has_node(^"DialoguePlayer"):
 			continue
-		n.get_node(^"DialoguePlayer").dialogue_finished.connect(self._on_opponent_dialogue_finished.bind(n))
+		var dp := n.get_node(^"DialoguePlayer")
+		dp.dialogue_finished.connect(self._on_opponent_dialogue_finished.bind(n))
 	remove_child(combat_screen)
 
 

@@ -5,6 +5,7 @@ extends Pawn
 @export var combat_actor: PackedScene
 #warning-ignore:unused_class_variable
 var lost = false
+var tween
 
 func _ready():
 	update_look_direction(Vector2.RIGHT)
@@ -19,7 +20,7 @@ func _process(_delta):
 	var target_position = parent.request_move(self, input_direction)
 	if target_position:
 		move_to(target_position)
-		$Tween.start()
+		
 	else:
 		bump()
 
@@ -32,14 +33,24 @@ func get_input_direction():
 
 
 func update_look_direction(direction):
-	$Pivot/Sprite2D.rotation = direction.angle()
+	var angle = atan2(direction.y, direction.x)
+	var pos = Vector2(transform.get_origin())
+	transform = Transform2D(angle, pos)
 
 
 func move_to(target_position):
+	tween = get_tree().create_tween()
+	target_position = Vector2(target_position.x, target_position.y)
 	set_process(false)
 	$AnimationPlayer.play("walk")
 	var move_direction = (position - target_position).normalized()
-	$Tween.interpolate_property($Pivot, "position", move_direction * 32, Vector2(), $AnimationPlayer.current_animation_length, Tween.TRANS_LINEAR, Tween.EASE_IN)
+#   TODO: Fix tween (seems to be moving backwards then forewards?)
+	tween.tween_property($Pivot/Sprite2D, 
+		"position", 
+		move_direction * 32,
+		$AnimationPlayer.current_animation_length)
+	tween.set_trans(Tween.TRANS_LINEAR)
+	tween.set_ease(Tween.EASE_IN)
 	$Pivot/Sprite2D.position = position - target_position
 	position = target_position
 

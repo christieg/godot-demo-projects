@@ -2,12 +2,14 @@ extends Pawn
 
 @onready var Grid = get_parent()
 var lost = false
+var tween
 
 func _ready():
 	update_look_direction(Vector2.RIGHT)
 
 
 func _process(delta):
+	
 	var input_direction = get_input_direction()
 	if not input_direction:
 		return
@@ -16,13 +18,13 @@ func _process(delta):
 	var target_position = Grid.request_move(self, input_direction)
 	if target_position:
 		move_to(target_position)
-		$Tween.start()
+		
 	else:
 		bump()
 
 
 func get_input_direction():
-	return Vector2(
+	return Vector2i(
 		Input.get_axis(&"ui_left", &"ui_right"),
 		Input.get_axis(&"ui_up", &"ui_down")
 	)
@@ -33,10 +35,13 @@ func update_look_direction(direction):
 
 
 func move_to(target_position):
+	tween = get_tree().create_tween()
 	set_process(false)
 	$AnimationPlayer.play("walk")
 	var move_direction = (position - target_position).normalized()
-	$Tween.interpolate_property($Pivot, "position", move_direction * 32, Vector2(), $AnimationPlayer.current_animation_length, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	tween.tween_property($Pivot, "position", move_direction * 32, $AnimationPlayer.current_animation_length)
+	tween.setTrans(Tween.TRANS_LINEAR)
+	tween.setEase(Tween.EASE_IN)
 	$Pivot/Sprite2D.position = position - target_position
 	position = target_position
 

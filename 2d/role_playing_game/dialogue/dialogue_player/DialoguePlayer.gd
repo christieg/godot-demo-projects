@@ -1,6 +1,6 @@
 extends Node
 
-@export var dialogue_file: String, FILE, "*.json"
+@export_file("*.json") var dialogue_file
 var dialogue_keys = []
 var dialogue_name = ""
 var current = 0
@@ -34,10 +34,14 @@ func index_dialogue():
 
 
 func load_dialogue(file_path):
-	var file = File.new()
-	if file.file_exists(file_path):
-		file.open(file_path, file.READ)
+	var file
+	if FileAccess.file_exists(file_path):
+		file = FileAccess.open(file_path, FileAccess.READ)
 		var json = JSON.new()
 		json.parse(file.get_as_text())
 		var dialogue = json.get_data()
 		return dialogue
+
+
+func _ready():
+	pass # Replace with function body.
