@@ -28,7 +28,7 @@ func request_move(pawn, direction):
 			set_cell(0, cell_target, CellType.ACTOR)
 			set_cell(0, cell_start, -1)
 			
-			return map_to_local(cell_target) 
+			return map_to_local(cell_target)
 			
 		CellType.OBJECT, CellType.ACTOR:
 			var target_pawn = get_cell_pawn(cell_target, cell_tile_id)

@@ -44,10 +44,11 @@ func move_to(target_position):
 	set_process(false)
 	$AnimationPlayer.play("walk")
 	var move_direction = (position - target_position).normalized()
-#   TODO: Fix tween (seems to be moving backwards then forewards?)
-	tween.tween_property($Pivot/Sprite2D, 
+#   TODO: tween only works when moving right
+	print(move_direction)
+	tween.tween_property($Pivot, 
 		"position", 
-		move_direction * 32,
+		move_direction * 16,
 		$AnimationPlayer.current_animation_length)
 	tween.set_trans(Tween.TRANS_LINEAR)
 	tween.set_ease(Tween.EASE_IN)
